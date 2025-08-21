@@ -17,12 +17,11 @@ public class Rides {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "passenger_id")
-    private String passengerId;
-
-    @Column(name = "driver_id", unique = true)
-    private String driverId;
-
+    // You don't need these direct column mappings. The @ManyToOne and @JoinColumn
+    // annotations below handle it for you.
+    // private Long passengerId;
+    // private Long driverId;
+    
     @Enumerated(EnumType.STRING)
     @Column(name = "vehicle_requested")
     private VehicleType vehicleRequested;
@@ -40,7 +39,7 @@ public class Rides {
     private Double destinationLongitude;
 
     @Column(name = "fare")
-    private Long fare;
+    private Double fare;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -50,4 +49,12 @@ public class Rides {
 
     @Column(name = "end_time")
     private LocalDateTime endTime;
+
+    @ManyToOne
+    @JoinColumn(name = "passenger_id")
+    private User passenger;
+
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
 }

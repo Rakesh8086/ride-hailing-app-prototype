@@ -1,4 +1,5 @@
 package com.ridehailingapp.prototype.entity;
+import java.util.List;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class Driver {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "vehicle_type")
-    private UserType vehicleType;
+    private VehicleType vehicleType; // Corrected from UserType
 
     @Column(name = "current_latitude")
     private Double currentLatitude;
@@ -33,4 +34,11 @@ public class Driver {
 
     @Column(name = "is_available")
     private Boolean isAvailable;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rides> ridesAsDriver;
 }

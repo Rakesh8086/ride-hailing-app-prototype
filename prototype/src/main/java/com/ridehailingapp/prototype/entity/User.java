@@ -1,9 +1,11 @@
+
 package com.ridehailingapp.prototype.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -38,11 +40,9 @@ public class User {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    // We'll define the relationships here later, as we planned.
-    // For now, we'll keep the relationship fields commented out.
-    // @OneToOne(mappedBy = "user")
-    // private Driver driver;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Driver driver;
 
-    // @OneToMany(mappedBy = "passenger")
-    // private List<Ride> ridesAsPassenger;
+    @OneToMany(mappedBy = "passenger", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Rides> ridesAsPassenger;
 }
